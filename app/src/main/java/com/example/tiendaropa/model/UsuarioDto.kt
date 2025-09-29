@@ -2,7 +2,7 @@ package com.example.tiendaropa.model
 
 import java.time.LocalDate
 
-class UsuarioDto(
+data class UsuarioDto(
     val id: Long,
     val dni: String,
     val nombre: String,
@@ -12,5 +12,5 @@ class UsuarioDto(
     var email: String,
     var password: String,
     //0* pedidos
-    var pedidos: Set<PedidoDto>
+    var pedidos: List<PedidoDto>
 )
