@@ -43,7 +43,7 @@ class Controlador {
     // Si se le pasa 1 año (p.ej 2025) calcula el gasto total de ese año, en caso contrario,
     // calcula el gasto de todos los años.
     //? al poder ser null
-    fun gatoTotal(
+    fun gastoTotal(
         usuario: UsuarioDto,
         anio: Int?
     ): Double {
