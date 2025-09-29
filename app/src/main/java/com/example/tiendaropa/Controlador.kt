@@ -47,7 +47,7 @@ class Controlador {
         usuario: UsuarioDto,
         anio: Int?
     ): Double {
-
+        return usuario.pedidos.
     }
 
 
