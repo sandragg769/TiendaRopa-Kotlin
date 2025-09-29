@@ -4,6 +4,7 @@ import com.example.tiendaropa.model.PedidoDto
 import com.example.tiendaropa.model.Producto
 import com.example.tiendaropa.model.UsuarioDto
 import com.example.tiendaropa.model.enumeraciones.Talla
+import java.util.Calendar
 import java.util.Date
 
 class Controlador {
@@ -50,22 +51,28 @@ class Controlador {
             usuario.pedidos
         } else {
             //si si se le ha pedido se filtra
-            usuario.pedidos.filter { it.fecha.year == anio }
+            //para usar el Date y que en las pruebas salga bien hay que poner esto
+            usuario.pedidos.filter { pedido ->
+                val calendar = Calendar.getInstance()
+                calendar.time = pedido.fecha
+                val year = calendar.get(Calendar.YEAR)
+                year == anio
+            }
         }
         //con este metodo se saca el total de la suma del precio de los pedidos
-        return sumarPrecioPedidosDeUsuario(listaPedidos, usuario)
+        return sumarPrecioPedidos(listaPedidos)
     }
 
     //METODO AUXILIAR para sumar el precio de todos los pedidos de la lista
     //se le pasa una lista de pedidos y esta se recorre
-    fun sumarPrecioPedidosDeUsuario(listaPedidos: List<PedidoDto>, usuario: UsuarioDto): Double {
+    fun sumarPrecioPedidos(listaPedidos: List<PedidoDto>): Double {
         //será la suman total a devolver
         var acum: Double = 0.0
 
-        for (pedido in usuario.pedidos) {
+        for (pedido in listaPedidos) {
             //en un pedido concreto mirar las lineas de pedido
             for (lineaPedido in pedido.lineasPedido) {
-                acum += lineaPedido.producto.precioFinal
+                acum += lineaPedido.producto.precioFinal * lineaPedido.cantidad
             }
         }
         return acum
@@ -84,6 +91,7 @@ class Controlador {
     //Dados todos los pedidos del sistema, obtiene un ranking de los 5 productos más vendidos (5 productos
     // por defecto, pero podría pasarse otro número como parámetro).
     fun productosMasVendidos(cantidad: Int = 5) {
+        var conteoProductos: Map<Producto, Int>
 
 
     }

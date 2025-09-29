@@ -15,6 +15,8 @@ class Producto(
     var bolsillos: Int,
     var conCapucha: Boolean,
     var nivelAbrigo: Int,
-    //1 linea de pedido
-    var lineaPedido: LineaPedido
-)
+) {
+    override fun toString(): String {
+        return "Producto(id=$id, nombre='$nombre', marca='$marca', precioFinal=$precioFinal, talla=$talla)"
+    }
+}
