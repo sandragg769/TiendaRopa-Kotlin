@@ -3,7 +3,7 @@ package com.example.tiendaropa.model
 import com.example.tiendaropa.model.enumeraciones.Color
 import com.example.tiendaropa.model.enumeraciones.Talla
 
-class ProductoDto(
+class Producto(
     val id: Long,
     var nombre: String,
     var marca: String,
@@ -16,5 +16,5 @@ class ProductoDto(
     var conCapucha: Boolean,
     var nivelAbrigo: Int,
     //1 linea de pedido
-    var lineaPedido: LineaPedidoDto
+    var lineaPedido: LineaPedido
 )

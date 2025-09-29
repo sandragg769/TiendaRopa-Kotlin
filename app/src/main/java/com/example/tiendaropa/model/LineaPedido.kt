@@ -1,9 +1,8 @@
 package com.example.tiendaropa.model
 
-class LineaPedidoDto(
+class LineaPedido(
     val id: Int,
     var cantidad: Int,
-    var pedido: PedidoDto,
     //0 1 producto
-    var producto: ProductoDto
+    var producto: Producto
 )
