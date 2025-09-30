@@ -1,38 +1,40 @@
 package com.example.tiendaropa
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.tiendaropa.model.PedidoDto
-import com.example.tiendaropa.model.Producto
+import com.example.tiendaropa.model.ProductoDto
 import com.example.tiendaropa.model.UsuarioDto
 import com.example.tiendaropa.model.enumeraciones.Talla
-import java.util.Calendar
-import java.util.Date
+import java.time.LocalDate
+import kotlin.collections.filter
 
 class Controlador {
     //filtrar productos por precio en un rango
     fun filtrarProductoPorPrecio(
-        listaProductos: List<Producto>, minimo: Double, maximo: Double
-    ): List<Producto> {
+        listaProductos: List<ProductoDto>, minimo: Double, maximo: Double
+    ): List<ProductoDto> {
         return listaProductos.filter { it.precioFinal in minimo..maximo }
     }
 
     //filtrar productos por talla (por defecto talla L
     fun filtrarProductoPorTalla(
-        listaProductos: List<Producto>, talla: Talla = Talla.L
-    ): List<Producto> {
+        listaProductos: List<ProductoDto>, talla: Talla = Talla.L
+    ): List<ProductoDto> {
         return listaProductos.filter { it.talla == talla }
     }
 
     //ordenar lista de prodcutos por precio, se pasa por parametro el orden (ascendente o descendente que será un bool)
     fun ordenarProductoPorPrecio(
-        listaProductos: List<Producto>, acdencendente: Boolean
-    ): List<Producto> {
+        listaProductos: List<ProductoDto>, acdencendente: Boolean
+    ): List<ProductoDto> {
         if (acdencendente) return listaProductos.sortedBy { it.precioFinal }
         else return listaProductos.sortedByDescending { it.precioFinal }
     }
 
     //contar productos que sean de una marca en concreto
     fun contarPorMarca(
-        listaProductos: List<Producto>, marca: String
+        listaProductos: List<ProductoDto>, marca: String
     ): Int {
         return listaProductos.count { it.marca == marca }
     }
@@ -53,10 +55,7 @@ class Controlador {
             //si si se le ha pedido se filtra
             //para usar el Date y que en las pruebas salga bien hay que poner esto
             usuario.pedidos.filter { pedido ->
-                val calendar = Calendar.getInstance()
-                calendar.time = pedido.fecha
-                val year = calendar.get(Calendar.YEAR)
-                year == anio
+                pedido.fecha.year == anio
             }
         }
         //con este metodo se saca el total de la suma del precio de los pedidos
@@ -71,7 +70,7 @@ class Controlador {
 
         for (pedido in listaPedidos) {
             //en un pedido concreto mirar las lineas de pedido
-            for (lineaPedido in pedido.lineasPedido) {
+            for (lineaPedido in pedido.lineasPedido!!) {
                 acum += lineaPedido.producto.precioFinal * lineaPedido.cantidad
             }
         }
@@ -80,7 +79,7 @@ class Controlador {
 
     //Dado un usuario, una fecha inicio y una fecha fin, devuelva los pedidos en ese rango de fechas.
     fun pedidosEnRangoFecha(
-        usuario: UsuarioDto, fechaInicio: Date, fechaFin: Date
+        usuario: UsuarioDto, fechaInicio: LocalDate, fechaFin: LocalDate
     ): List<PedidoDto> {
         //sacar el rango
         val rango = fechaInicio..fechaFin
@@ -90,10 +89,15 @@ class Controlador {
 
     //Dados todos los pedidos del sistema, obtiene un ranking de los 5 productos más vendidos (5 productos
     // por defecto, pero podría pasarse otro número como parámetro).
-    fun productosMasVendidos(cantidad: Int = 5) {
-        var conteoProductos: Map<Producto, Int>
+    fun productosMasVendidos(cantidad: Int = 5): List<ProductoDto> {
+        //mapa a devolver
+        var conteoProductos: MutableMap<ProductoDto, Int>
+        //obtener todos los pedidos del sistema
 
+        //contar cantidad de cada productos de cada pedido e ir guardandolo en un mapa de Producto-cantidad
+        //ordenar el mapa de los productos por la cantidad (es decir el valor) y devolver la cantidad indicada
 
     }
+
 
 }

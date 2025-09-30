@@ -1,13 +1,13 @@
 package com.example.tiendaropa.model
 
 import com.example.tiendaropa.model.enumeraciones.EstadoPedido
-import java.util.Date
+import java.time.LocalDate
 
 data class PedidoDto(
-    val id: Int,
-    var fecha: Date,
-    var estado: EstadoPedido,
+    val id: Int = 0,
+    var fecha: LocalDate,
+    var estado: EstadoPedido = EstadoPedido.PENDIENTE,
     var usuario: UsuarioDto,
     //1* lineas de pedido
-    var lineasPedido: List<LineaPedido>
+    var lineasPedido: List<LineaPedidoDto>? = null
 )
