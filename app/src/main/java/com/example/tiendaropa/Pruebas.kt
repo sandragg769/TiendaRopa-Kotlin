@@ -1,7 +1,5 @@
 package com.example.tiendaropa
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.tiendaropa.model.LineaPedidoDto
 import com.example.tiendaropa.model.PedidoDto
 import com.example.tiendaropa.model.ProductoDto
@@ -10,7 +8,7 @@ import com.example.tiendaropa.model.enumeraciones.Color
 import com.example.tiendaropa.model.enumeraciones.EstadoPedido
 import com.example.tiendaropa.model.enumeraciones.Talla
 import java.time.LocalDate
-import java.util.Date
+
 
 fun main() {
     val controlador = Controlador()
@@ -29,7 +27,7 @@ fun main() {
         listOf()
     )
 
-    // Crear pedidos (el 0 es Enero)
+    // Crear pedidos
     val pedido1 = PedidoDto(
         id = 1,
         fecha = LocalDate.of(2025, 1, 15),
@@ -43,6 +41,28 @@ fun main() {
         estado = EstadoPedido.PENDIENTE,
         usuario = usuario
     )
+
+    val pedido3 = PedidoDto(
+        id = 3,
+        fecha = LocalDate.of(2025, 5, 10),
+        estado = EstadoPedido.FINALIZADO,
+        usuario = usuario
+    )
+
+    val pedido4 = PedidoDto(
+        id = 4,
+        fecha = LocalDate.of(2025, 7, 21),
+        estado = EstadoPedido.FINALIZADO,
+        usuario = usuario
+    )
+
+    val pedido5 = PedidoDto(
+        id = 5,
+        fecha = LocalDate.of(2024, 12, 1),
+        estado = EstadoPedido.FINALIZADO,
+        usuario = usuario
+    )
+
 
     // Crear productos
     val producto1 =
@@ -81,21 +101,59 @@ fun main() {
         pedidoDto = pedido2,
         producto = producto3
     )
+    val linea4 = LineaPedidoDto(
+        id = 4,
+        cantidad = 4,
+        pedidoDto = pedido3,
+        producto = producto1
+    )
+
+    val linea5 = LineaPedidoDto(
+        id = 5,
+        cantidad = 2,
+        pedidoDto = pedido3,
+        producto = producto5
+    )
+
+    val linea6 = LineaPedidoDto(
+        id = 6,
+        cantidad = 1,
+        pedidoDto = pedido4,
+        producto = producto2
+    )
+
+    val linea7 = LineaPedidoDto(
+        id = 7,
+        cantidad = 2,
+        pedidoDto = pedido4,
+        producto = producto4
+    )
+
+    val linea8 = LineaPedidoDto(
+        id = 8,
+        cantidad = 5,
+        pedidoDto = pedido5,
+        producto = producto1
+    )
+
+    val linea9 = LineaPedidoDto(
+        id = 9,
+        cantidad = 1,
+        pedidoDto = pedido5,
+        producto = producto6
+    )
+
 
     //UNIR OBJETOS (no se puede hacer antes ya que no hay x objetos creados)
     //meter las lineas de pedido a los pedidos
     pedido1.lineasPedido = listOf(linea1, linea2)
     pedido2.lineasPedido = listOf(linea3)
+    pedido3.lineasPedido = listOf(linea4, linea5)
+    pedido4.lineasPedido = listOf(linea6, linea7)
+    pedido5.lineasPedido = listOf(linea8, linea9)
 
-    //meter los pedidos a los usuarios
-    usuario.pedidos = listOf(pedido1, pedido2)
-
-    /* ?????????
-    Conectar productos con su pedido (si quieres mantener referencia)
-    producto1.pedido = pedido1
-    producto2.pedido = pedido1
-    producto3.pedido = pedido2
-    * */
+    //meter los pedidos al usuario
+    usuario.pedidos = listOf(pedido1, pedido2, pedido3, pedido4, pedido5)
 
 
     //PROBAR METODOS
@@ -129,6 +187,15 @@ fun main() {
         //así se hace un "printf"
         println("Pedido ${it.id}, Fecha=${it.fecha}, Estado=${it.estado}")
     }
+
+    //crear lista (ficticia) con todos los pedidos para probar el metodo
+    val pedidos = listOf(pedido1, pedido2, pedido3, pedido4, pedido5)
+
+    println("6 Productos mas vendidos:")
+    controlador.productosMasVendidos(6, pedidos).forEach { println(it) }
+
+    println("Productos mas vendidos (5 por defecto):")
+    controlador.productosMasVendidos(listaPedidos = pedidos).forEach { println(it) }
 
 
 }
